@@ -8,7 +8,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { setCredentials } from '../slices/authSlice';
+import { setCredentials } from '../services/authSlice';
 import routes from '../routes';
 
 const Login = () => {
@@ -30,8 +30,9 @@ const Login = () => {
       try {
         const res = await axios.post(routes.loginPath(), values);
         const { data } = res;
-        localStorage.setItem('token', JSON.stringify(data.token));
-        dispatch(setCredentials({ user: values.username, token: data }));
+        localStorage.setItem('user', data.username);
+        localStorage.setItem('token', data.token);
+        dispatch(setCredentials({ user: values.username, token: data.token }));
         navigate('/');
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
