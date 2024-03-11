@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: localStorage.getItem('token') ?? null,
-    token: null,
+    user: localStorage.getItem('user') ?? null,
+    token: localStorage.getItem('token') ?? null,
   },
   reducers: {
     setCredentials: (state, { payload: { user, token } }) => {
@@ -18,4 +18,4 @@ export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const selectCurrentUser = (state) => state.auth.user;
+export const selectCurrentUser = (state) => state.auth;

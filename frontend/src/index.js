@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.scss';
 
 import App from './components/App';
-import store from './slices/index';
+import store from './services/index';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

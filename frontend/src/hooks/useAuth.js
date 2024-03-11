@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../slices/authSlice';
+import { selectCurrentUser } from '../services/authSlice';
 
 export default () => {
   const auth = useSelector(selectCurrentUser);
@@ -8,5 +8,6 @@ export default () => {
   //     localStorage.removeItem('userId');
 
   // }
+  // console.log(auth);
   return auth;
 };
