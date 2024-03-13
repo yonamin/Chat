@@ -29,10 +29,10 @@ const Login = () => {
       setAuthFailed(false);
       try {
         const res = await axios.post(routes.loginPath(), values);
-        const { data } = res;
-        localStorage.setItem('user', data.username);
-        localStorage.setItem('token', data.token);
-        dispatch(setCredentials({ user: values.username, token: data.token }));
+        const { data: { username, token } } = res;
+        localStorage.setItem('username', username);
+        localStorage.setItem('token', token);
+        dispatch(setCredentials({ username, token }));
         navigate('/');
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
