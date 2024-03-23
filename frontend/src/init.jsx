@@ -1,10 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import resources from './locales/index';
 import App from './components/App';
 import store from './services/index';
+import { messagesApi } from './services/messagesApi';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,6 +20,17 @@ export default async () => {
       resources,
       fallbackLng: ['ru', 'en'],
     });
+
+  const socket = io();
+
+  socket.on('newMessage', (msg) => {
+    store.dispatch(
+      messagesApi.util.updateQueryData('getMessages', undefined, (draftPosts) => {
+        draftPosts.push(msg);
+      }),
+    );
+    console.log(store.getState().messages.queries);
+  });
 
   return (
     <React.StrictMode>
