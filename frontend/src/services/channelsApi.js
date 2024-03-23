@@ -4,8 +4,8 @@ import routes from '../routes';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: '',
-  prepareHeaders: (headers) => {
-    const token = localStorage.getItem('token');
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth?.token;
 
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
@@ -29,15 +29,35 @@ export const channelsApi = createApi({
         method: 'POST',
       }),
     }),
+    editChannel: builder.mutation({
+      query: (channel) => {
+        const { newName, channelId } = channel;
+        return {
+          url: routes.channelPath(channelId),
+          body: newName,
+          method: 'PATCH',
+        };
+      },
+    }),
+    removeChannel: builder.mutation({
+      query: (channelId) => ({
+        url: routes.channelPath(channelId),
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
 const {
   useGetChannelsQuery,
   useAddChannelMutation,
+  useEditChannelMutation,
+  useRemoveChannelMutation,
 } = channelsApi;
 
 export {
   useGetChannelsQuery as getChannels,
   useAddChannelMutation as addChannel,
+  useEditChannelMutation as editChannel,
+  useRemoveChannelMutation as removeChannel,
 };

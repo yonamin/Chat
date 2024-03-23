@@ -1,9 +1,11 @@
 import Spinner from 'react-bootstrap/Spinner';
 
 const MainSpinner = () => (
-  <Spinner animation="grow" className="ms-5 mt-3" role="status">
-    <span className="visually-hidden">Loading...</span>
-  </Spinner>
+  <div className="d-flex mt-5 justify-content-center">
+    <Spinner animation="grow" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </div>
 );
 
 export default MainSpinner;

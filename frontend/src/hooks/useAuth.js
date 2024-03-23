@@ -1,13 +1,28 @@
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../services/authSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentUser, setCredentials } from '../services/authSlice';
 
 export default () => {
-  const auth = useSelector(selectCurrentUser);
-  // const loggedIn = auth?.user;
-  // const logOut = () => {
-  //     localStorage.removeItem('userId');
+  const user = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
 
-  // }
-  // console.log(auth);
-  return auth;
+  const loggedIn = user.token;
+
+  const logIn = (username, token) => {
+    localStorage.setItem('username', username);
+    localStorage.setItem('token', token);
+    dispatch(setCredentials({ username, token }));
+  };
+
+  const logOut = () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+    dispatch(setCredentials({ username: null, token: null }));
+  };
+
+  return {
+    user,
+    loggedIn,
+    logIn,
+    logOut,
+  };
 };
