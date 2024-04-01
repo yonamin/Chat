@@ -3,10 +3,13 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+// import { indexOf } from 'lodash';
 import resources from './locales/index';
 import App from './components/App';
 import store from './services/index';
 import { messagesApi } from './services/messagesApi';
+import { channelsApi, defaultChannelId } from './services/channelsApi';
+import { setActiveChannelId } from './slices/ui';
 
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,16 +23,40 @@ export default async () => {
       resources,
       fallbackLng: ['ru', 'en'],
     });
+  const { dispatch } = store;
 
   const socket = io();
 
   socket.on('newMessage', (msg) => {
-    store.dispatch(
-      messagesApi.util.updateQueryData('getMessages', undefined, (draftPosts) => {
-        draftPosts.push(msg);
+    dispatch(
+      messagesApi.util.updateQueryData('getMessages', undefined, (draft) => {
+        draft.push(msg);
       }),
     );
-    console.log(store.getState().messages.queries);
+  });
+  socket.on('newChannel', (chn) => {
+    dispatch(
+      channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
+        draft.push(chn);
+      }),
+    );
+  });
+  socket.on('renameChannel', (chn) => {
+    dispatch(
+      channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
+        const idx = draft.findIndex((c) => c.id === chn.id);
+        draft[idx] = chn;
+      }),
+    );
+  });
+  socket.on('removeChannel', (chn) => {
+    dispatch(
+      channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
+        const idx = draft.findIndex((c) => c.id === chn.id);
+        draft.splice(idx, 1);
+      }),
+    );
+    dispatch(setActiveChannelId({ id: String(defaultChannelId) }));
   });
 
   return (

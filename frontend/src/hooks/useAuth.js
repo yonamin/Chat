@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCurrentUser, setCredentials } from '../services/authSlice';
+import { selectCurrentUser, setCredentials } from '../slices/authSlice';
 
 export default () => {
   const user = useSelector(selectCurrentUser);

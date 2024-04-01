@@ -7,14 +7,18 @@ import Container from 'react-bootstrap/Container';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { uniqueId } from 'lodash';
+import useAuth from '../hooks/useAuth';
 
 const MainNavbar = () => {
   const { t, i18n } = useTranslation();
+  const { logOut } = useAuth();
   const { resolvedLanguage } = i18n;
 
   const handleSwitchLng = (lng) => async () => {
     await i18n.changeLanguage(lng);
   };
+
+  const handleLogOut = () => logOut();
 
   const buildLanguageList = () => {
     const lngs = i18n.languages;
@@ -35,9 +39,13 @@ const MainNavbar = () => {
   return (
     <Navbar bg="light" className="border-bottom border-dark border-3" expand="lg">
       <Container>
-        <Navbar.Brand className="pe-2 me-1 rounded-2 border-bottom border-end border-primary border-3">ChatKit</Navbar.Brand>
+        <Navbar.Brand
+          className="pe-2 me-1 rounded-2 border-bottom border-end border-primary border-3"
+        >
+          ChatKit
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="lng" />
-        <Navbar.Collapse id="lng">
+        <Navbar.Collapse id="lng" className="d-flex justify-content-end">
           <Nav>
             <NavDropdown
               id="changeLng"
@@ -48,7 +56,7 @@ const MainNavbar = () => {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        <Button className="border-dark border-start-0 border-top-0 border-3">{t('mainPage.logOut')}</Button>
+        <Button onClick={handleLogOut} className="border-dark border-start-0 border-top-0 border-3">{t('mainPage.logOut')}</Button>
       </Container>
     </Navbar>
   );

@@ -4,13 +4,15 @@ import Button from 'react-bootstrap/Button';
 
 import { useFormik } from 'formik';
 import { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { uniqueId } from 'lodash';
 
 import MainSpinner from './Spinner';
 import { getMessages, addMessage } from '../services/messagesApi';
 import useAuth from '../hooks/useAuth';
-
+import { selectActiveChannelId } from '../slices/ui';
+import { getChannels } from '../services/channelsApi';
 // make correct overflow in messageBox
 
 const MessageBox = ({ activeChannelId, messages, setCount }) => {
@@ -37,20 +39,22 @@ const MessageBox = ({ activeChannelId, messages, setCount }) => {
   );
 };
 
-const Messages = ({ activeChannel }) => {
+const Messages = () => {
   const { t } = useTranslation();
-  const { username } = useAuth();
+  const { user: { username } } = useAuth();
   const { data, isLoading, refetch } = getMessages();
+  const { data: channels } = getChannels();
   const [addMessageFunc] = addMessage();
   const [messagesCount, setMessagesCount] = useState(0);
   const inputRef = useRef(null);
+  const activeChannelId = useSelector(selectActiveChannelId);
 
   const formikObj = useFormik({
     initialValues: { message: '' },
     onSubmit: (values) => {
       const msgObj = {
         body: values.message,
-        channelId: activeChannel.id,
+        channelId: activeChannelId,
         username,
       };
       addMessageFunc(msgObj);
@@ -74,21 +78,21 @@ const Messages = ({ activeChannel }) => {
 
     return (
       <MessageBox
-        activeChannelId={activeChannel.id}
+        activeChannelId={activeChannelId}
         messages={{ data, isLoading }}
         setCount={setMessagesCount}
       />
     );
   };
 
+  const channelName = channels?.find((c) => c.id === activeChannelId)?.name;
   return (
     <Col className="p-0 h-100">
       <div className="d-flex h-100 flex-column">
         <div className="chat bg-secondary rounded p-3 pe-2 ">
           <p className="m-0">
             <b>
-              #
-              {activeChannel.name}
+              {`# ${channelName}`}
             </b>
           </p>
           <span className="text-muted">{t('mainPage.messages.counter.count', { count: messagesCount })}</span>

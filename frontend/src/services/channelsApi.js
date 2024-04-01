@@ -61,3 +61,5 @@ export {
   useEditChannelMutation as editChannel,
   useRemoveChannelMutation as removeChannel,
 };
+
+export const defaultChannelId = 1;
