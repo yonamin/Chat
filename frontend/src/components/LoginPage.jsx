@@ -11,6 +11,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import routes from '../routes';
+import MainNavbar from './MainNavbar';
 
 const Login = () => {
   const inputRef = useRef();
@@ -46,59 +47,66 @@ const Login = () => {
   });
 
   return (
-    <Container fluid="sm" className="justify-content-center d-flex pt-5">
-      <Card
-        bg="light"
-        style={{ width: '30rem' }}
-      >
-        <Card.Header as="h2" className="text-center">
-          ChatKit
-        </Card.Header>
-        <Card.Body className="m-3">
-          <Form onSubmit={formikObj.handleSubmit} className="d-flex flex-column justify-content-center mt-2">
-            <Form.Group className="mb-4">
-              <FloatingLabel
-                htmlFor="username"
-                label={t('loginPage.username')}
-              >
-                <Form.Control
-                  name="username"
-                  id="username"
-                  placeholder={t('loginPage.username')}
-                  onChange={formikObj.handleChange}
-                  value={formikObj.values.username}
-                  ref={inputRef}
-                  isInvalid={authFailed}
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
-            <Form.Group className="mb-4">
-              <FloatingLabel
-                htmlFor="password"
-                label={t('loginPage.password')}
-              >
-                <Form.Control
-                  name="password"
-                  id="password"
-                  type="password"
-                  placeholder={t('loginPage.password')}
-                  onChange={formikObj.handleChange}
-                  value={formikObj.values.password}
-                  isInvalid={authFailed}
-                  required
-                />
-                <Form.Control.Feedback type="invalid">{t('loginPage.invalidFeedback')}</Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Group>
-            <Button variant="outline-dark" type="submit">
-              {t('loginPage.logIn')}
+    <div className="d-flex flex-column h-100">
+      <MainNavbar />
+      <Container fluid="sm" className="justify-content-center d-flex pt-5">
+        <Card
+          bg="light"
+          style={{ width: '30rem' }}
+        >
+          <Card.Header as="h2" className="text-center">
+            ChatKit
+          </Card.Header>
+          <Card.Body className="m-3">
+            <Form onSubmit={formikObj.handleSubmit} className="d-flex flex-column justify-content-center mt-2">
+              <Form.Group className="mb-4">
+                <FloatingLabel
+                  htmlFor="username"
+                  label={t('loginPage.username')}
+                >
+                  <Form.Control
+                    name="username"
+                    id="username"
+                    placeholder={t('loginPage.username')}
+                    onChange={formikObj.handleChange}
+                    value={formikObj.values.username}
+                    ref={inputRef}
+                    isInvalid={authFailed}
+                    required
+                  />
+                </FloatingLabel>
+              </Form.Group>
+              <Form.Group className="mb-4">
+                <FloatingLabel
+                  htmlFor="password"
+                  label={t('loginPage.password')}
+                >
+                  <Form.Control
+                    name="password"
+                    id="password"
+                    type="password"
+                    placeholder={t('loginPage.password')}
+                    onChange={formikObj.handleChange}
+                    value={formikObj.values.password}
+                    isInvalid={authFailed}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">{t('loginPage.invalidFeedback')}</Form.Control.Feedback>
+                </FloatingLabel>
+              </Form.Group>
+              <Button variant="outline-dark" type="submit">
+                {t('loginPage.logIn')}
+              </Button>
+            </Form>
+          </Card.Body>
+          <Card.Footer className="text-center p-3">
+            <Button variant="link" onClick={() => navigate('/signup')}>
+              {t('signUpPage.signingUp')}
             </Button>
-          </Form>
-        </Card.Body>
-        <Card.Footer className="text-center p-3">Регистрация</Card.Footer>
-      </Card>
-    </Container>
+          </Card.Footer>
+        </Card>
+      </Container>
+    </div>
   );
 };
 export default Login;

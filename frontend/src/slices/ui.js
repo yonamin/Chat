@@ -14,11 +14,9 @@ const uiSlice = createSlice({
     // },
     setActiveChannelId: (state, { payload: { id } }) => {
       state.activeChannelId = id;
-      // console.log(activeChannelId, 'active channel in slice');
     },
     // setDefaultChannelId: (state, { payload: { defaultChannelId } }) => {
     //   state.defaultChannelId = defaultChannelId;
-    //   console.log(defaultChannelId, 'default channel in slice');
     // },
     // addChannelName: (state, { payload: { channelName } }) => {
     //   state.channelNames = [...state.channelNames, channelName];

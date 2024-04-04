@@ -8,8 +8,10 @@ export default () => {
   const loggedIn = user.token;
 
   const logIn = (username, token) => {
-    localStorage.setItem('username', username);
-    localStorage.setItem('token', token);
+    if (!localStorage.getItem('token')) {
+      localStorage.setItem('username', username);
+      localStorage.setItem('token', token);
+    }
     dispatch(setCredentials({ username, token }));
   };
 

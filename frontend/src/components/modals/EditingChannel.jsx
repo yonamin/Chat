@@ -20,9 +20,9 @@ const EditingChannelModal = ({
   // const channels = useSelector((state) => state.channels);
   const [editChannelFn] = editChannel();
   const channelNameSchema = Yup.string()
-    .required(t('mainPage.modals.required'))
-    .min(3, t('mainPage.modals.invalidLength'))
-    .max(20, t('mainPage.modals.invalidLength'))
+    .required(t('validationFeedback.required'))
+    .min(3, t('validationFeedback.invalidLength'))
+    .max(20, t('validationFeedback.invalidLength'))
     .notOneOf(modalInfo.item.channelNames, t('mainPage.modals.notUnique'));
   const { id, name } = modalInfo.item;
 
