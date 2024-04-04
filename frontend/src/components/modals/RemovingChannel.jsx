@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import { removeChannel } from '../../services/channelsApi';
 
 const RemovingChannelModal = ({ hideModal, refetch, modalInfo }) => {
@@ -15,6 +16,7 @@ const RemovingChannelModal = ({ hideModal, refetch, modalInfo }) => {
       .then(() => {
         setLoading(false);
         hideModal();
+        toast.success(t('toast.channelRemoved'));
       });
     refetch();
   };

@@ -7,10 +7,12 @@ import { useFormik } from 'formik';
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
-import routes from '../routes';
+import { login } from '../services/usersApi';
+// import routes from '../routes';
 import MainNavbar from './MainNavbar';
 
 const Login = () => {
@@ -19,6 +21,7 @@ const Login = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const navigate = useNavigate();
   const { logIn } = useAuth();
+  const [loginToServer] = login();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -28,21 +31,28 @@ const Login = () => {
       username: '',
       password: '',
     },
-    onSubmit: async (values) => {
+    onSubmit: (values) => {
       setAuthFailed(false);
-      try {
-        const res = await axios.post(routes.loginPath(), values);
-        const { data: { username, token } } = res;
-        logIn(username, token);
-        navigate('/');
-      } catch (err) {
-        if (err.isAxiosError && err.response.status === 401) {
-          setAuthFailed(true);
-          inputRef.current.select();
-          return;
-        }
-        throw err;
-      }
+      loginToServer(values)
+        .unwrap()
+        .then(({ username, token }) => {
+          logIn(username, token);
+          navigate('/');
+        })
+        .catch((err) => {
+          switch (err.status) {
+            case 401:
+              setAuthFailed(true);
+              inputRef.current.select();
+              break;
+            case 'FETCH_ERROR':
+              toast.error(t('toast.connectionError'));
+              break;
+            default:
+              toast.error(t('unknownError'));
+              console.log(err);
+          }
+        });
     },
   });
 

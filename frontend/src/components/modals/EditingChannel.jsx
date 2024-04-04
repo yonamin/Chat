@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { useState, useRef, useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { editChannel } from '../../services/channelsApi';
 
 const EditingChannelModal = ({
@@ -46,6 +47,7 @@ const EditingChannelModal = ({
             hideModal();
             formik.resetForm();
             refetch();
+            toast.success(t('toast.channelRenamed'));
           });
       } catch (err) {
         setErrMessage(err.message);

@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { addChannel } from '../../services/channelsApi';
 import { setActiveChannelId } from '../../slices/ui';
 
@@ -40,9 +41,8 @@ const AddingChannelModal = ({ hideModal, refetch, modalInfo }) => {
             hideModal();
             refetch();
             setLoading(false);
+            toast.success(t('toast.channelCreated'));
           });
-        // hideModal();
-        // refetch();
         formik.resetForm();
       } catch (err) {
         setErrMessage(err.message);

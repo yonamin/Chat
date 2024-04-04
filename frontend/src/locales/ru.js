@@ -51,5 +51,12 @@ export default {
       userExists: 'Такой пользователь уже существует',
       required: 'Обязательное поле',
     },
+    toast: {
+      channelCreated: 'Канал создан!',
+      channelRenamed: 'Канал переименован!',
+      channelRemoved: 'Канал удалён!',
+      connectionError: 'Ошибка соединения',
+    },
+    unknownError: 'Что-то пошло не так...',
   },
 };

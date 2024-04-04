@@ -70,7 +70,6 @@ const Messages = () => {
   const messageBoxRender = () => {
     if (isLoading) {
       return <MainSpinner />;
-    // change spinner
     }
     if (data.length === 0) {
       return null;

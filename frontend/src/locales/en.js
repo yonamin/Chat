@@ -49,5 +49,12 @@ export default {
       userExists: 'This user already exists',
       required: 'Required field',
     },
+    toast: {
+      channelCreated: 'Channel created!',
+      channelRenamed: 'Channel renamed!',
+      channelRemoved: 'Channel removed!',
+      connectionError: 'Connection error',
+    },
+    unknownError: 'Something went wrong...',
   },
 };
