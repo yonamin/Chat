@@ -3,10 +3,8 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import Rollbar from 'rollbar';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import * as filter from 'leo-profanity';
-// import { indexOf } from 'lodash';
 import resources from './locales/index';
 import App from './components/App';
 import store from './services/index';
@@ -69,19 +67,18 @@ export default async () => {
     accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
     environment: 'production',
   };
-  const rollbar = new Rollbar(rollbarConfig);
 
   return (
     <React.StrictMode>
-      <Provider store={store}>
-        <RollbarProvider instance={rollbar}>
-          <ErrorBoundary>
+      <RollbarProvider config={rollbarConfig}>
+        <ErrorBoundary>
+          <Provider store={store}>
             <I18nextProvider i18n={i18n}>
               <App />
             </I18nextProvider>
-          </ErrorBoundary>
-        </RollbarProvider>
-      </Provider>
+          </Provider>
+        </ErrorBoundary>
+      </RollbarProvider>
     </React.StrictMode>
   );
 };
