@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import * as filter from 'leo-profanity';
 // import { indexOf } from 'lodash';
 import resources from './locales/index';
 import App from './components/App';
@@ -58,6 +59,9 @@ export default async () => {
     );
     dispatch(setActiveChannelId({ id: String(defaultChannelId) }));
   });
+
+  filter.add(filter.getDictionary('ru'));
+  filter.add(filter.getDictionary('fr'));
 
   return (
     <React.StrictMode>

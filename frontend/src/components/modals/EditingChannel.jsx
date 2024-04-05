@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useState, useRef, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+import * as censor from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { editChannel } from '../../services/channelsApi';
@@ -38,7 +38,7 @@ const EditingChannelModal = ({
         channelNameSchema.validateSync(newChannelName);
         setLoading(true);
         const channelObj = {
-          newName: { name: newChannelName },
+          newName: { name: censor.clean(newChannelName) },
           channelId: id,
         };
         editChannelFn(channelObj)

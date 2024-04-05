@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import * as censor from 'leo-profanity';
 import { addChannel } from '../../services/channelsApi';
 import { setActiveChannelId } from '../../slices/ui';
 
@@ -32,7 +33,7 @@ const AddingChannelModal = ({ hideModal, refetch, modalInfo }) => {
       try {
         channelNameSchema.validateSync(newChannel);
         setLoading(true);
-        addChannelFn({ name: newChannel })
+        addChannelFn({ name: censor.clean(newChannel) })
           .then((res) => {
             const { id } = res.data;
             dispatch(setActiveChannelId({ id }));

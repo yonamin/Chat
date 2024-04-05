@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { uniqueId } from 'lodash';
+import * as censor from 'leo-profanity';
 
 import MainSpinner from './Spinner';
 import { getMessages, addMessage } from '../services/messagesApi';
@@ -53,7 +54,7 @@ const Messages = () => {
     initialValues: { message: '' },
     onSubmit: (values) => {
       const msgObj = {
-        body: values.message,
+        body: censor.clean(values.message),
         channelId: activeChannelId,
         username,
       };
