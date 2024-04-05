@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import * as filter from 'leo-profanity';
 // import { indexOf } from 'lodash';
 import resources from './locales/index';
@@ -63,12 +64,21 @@ export default async () => {
   filter.add(filter.getDictionary('ru'));
   filter.add(filter.getDictionary('fr'));
 
+  const rollbarConfig = {
+    accessToken: '6db431b6aa1c4487adb5db0fc17c3e86',
+    environment: 'production',
+  };
+
   return (
     <React.StrictMode>
       <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-          <App />
-        </I18nextProvider>
+        <RollbarProvider config={rollbarConfig}>
+          <ErrorBoundary>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </ErrorBoundary>
+        </RollbarProvider>
       </Provider>
     </React.StrictMode>
   );

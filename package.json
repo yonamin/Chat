@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "React app: slack's analog",
+  "description": "React app: slack's chat analog",
   "main": "index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
