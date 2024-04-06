@@ -43,7 +43,7 @@ const MainNavbar = ({ logOutBtn }) => {
           className="pe-2 me-1 rounded-2 border-bottom border-end border-primary border-3"
           href="/"
         >
-          ChatKit
+          Hexlet Chat
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="lng" />
         <Navbar.Collapse id="lng" className="d-flex justify-content-end">

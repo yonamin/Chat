@@ -8,7 +8,7 @@ export default {
       username: 'Ваш ник',
       password: 'Пароль',
       logIn: 'Войти',
-      invalidFeedback: 'Неверный логин или пароль (x.x)',
+      invalidFeedback: 'Неверные имя пользователя или пароль',
     },
     mainPage: {
       logOut: 'Выйти',
@@ -32,9 +32,6 @@ export default {
         remove: 'Удалить',
         edit: 'Переименовать',
         notUnique: 'Должно быть уникальным',
-        // invalidLength: 'От 3 до 20 символов',
-        // required: 'Обязательное поле',
-        // notUnique: 'Должно быть уникальным',
       },
     },
     signUpPage: {
@@ -52,9 +49,9 @@ export default {
       required: 'Обязательное поле',
     },
     toast: {
-      channelCreated: 'Канал создан!',
-      channelRenamed: 'Канал переименован!',
-      channelRemoved: 'Канал удалён!',
+      channelCreated: 'Канал создан',
+      channelRenamed: 'Канал переименован',
+      channelRemoved: 'Канал удалён',
       connectionError: 'Ошибка соединения',
     },
     unknownError: 'Что-то пошло не так...',
