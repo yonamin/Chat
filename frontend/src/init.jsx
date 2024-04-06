@@ -65,12 +65,7 @@ export default async () => {
 
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
-    environment: 'testenv',
-  };
-
-  const TestErr = () => {
-    const a = null;
-    return a.hello();
+    environment: 'production',
   };
 
   return (
@@ -79,7 +74,6 @@ export default async () => {
         <ErrorBoundary>
           <Provider store={store}>
             <I18nextProvider i18n={i18n}>
-              <TestErr />
               <App />
             </I18nextProvider>
           </Provider>
