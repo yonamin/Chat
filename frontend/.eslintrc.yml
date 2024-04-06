@@ -16,8 +16,7 @@ parserOptions:
   ecmaFeatures: {
     jsx: true
   }
-plugins:
-  - react
+
 rules: 
   import/extensions: 0
   import/no-unresolved: 0
