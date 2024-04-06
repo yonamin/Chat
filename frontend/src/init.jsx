@@ -64,8 +64,13 @@ export default async () => {
   filter.add(filter.getDictionary('fr'));
 
   const rollbarConfig = {
-    accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-    environment: 'production',
+    accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
+    environment: 'testenv',
+  };
+
+  const TestErr = () => {
+    const a = null;
+    return a.hello();
   };
 
   return (
@@ -74,6 +79,7 @@ export default async () => {
         <ErrorBoundary>
           <Provider store={store}>
             <I18nextProvider i18n={i18n}>
+              <TestErr />
               <App />
             </I18nextProvider>
           </Provider>
