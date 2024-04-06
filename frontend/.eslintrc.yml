@@ -17,8 +17,8 @@ parserOptions:
     jsx: true
   }
 
-plugins:
-  - react
+# plugins:
+#   - react
 
 rules: 
   import/extensions: 0
