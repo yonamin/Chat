@@ -4,7 +4,6 @@ env:
 extends:
   - airbnb
   # - plugin:react/recommended
-  - react
   - plugin:react-hooks/recommended
 overrides: [
   {
