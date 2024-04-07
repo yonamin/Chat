@@ -71,12 +71,12 @@ const Login = () => {
             <Form onSubmit={formikObj.handleSubmit} className="d-flex flex-column justify-content-center mt-2">
               <Form.Group className="mb-4">
                 <FloatingLabel
-                  htmlFor="username"
+                  controlId="username"
                   label={t('loginPage.username')}
                 >
                   <Form.Control
                     name="username"
-                    id="username"
+                    // id="username"
                     placeholder={t('loginPage.username')}
                     onChange={formikObj.handleChange}
                     value={formikObj.values.username}
@@ -88,12 +88,12 @@ const Login = () => {
               </Form.Group>
               <Form.Group className="mb-4">
                 <FloatingLabel
-                  htmlFor="password"
+                  controlId="password"
                   label={t('loginPage.password')}
                 >
                   <Form.Control
                     name="password"
-                    id="password"
+                    // id="password"
                     type="password"
                     placeholder={t('loginPage.password')}
                     onChange={formikObj.handleChange}

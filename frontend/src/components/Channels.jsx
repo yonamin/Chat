@@ -3,20 +3,16 @@ import Nav from 'react-bootstrap/Nav';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-// import SplitButton from 'react-bootstrap/SplitButton';
 import Col from 'react-bootstrap/Col';
 //
-import classNames from 'classnames';
-// import { isEmpty } from 'lodash';
+// import classNames from 'classnames';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getChannels } from '../services/channelsApi';
 import {
   setActiveChannelId,
-  // setDefaultChannel,
   selectActiveChannelId,
-  // selectDefaultChannel,
 } from '../slices/ui';
 import MainSpinner from './Spinner';
 import getModal from './modals/index';
@@ -32,8 +28,6 @@ const renderModal = ({ modalInfo, hideModal, refetch }) => {
 
 const Channels = ({ data, refetch }) => {
   const { t } = useTranslation();
-  // const { data, isLoading, refetch } = getChannels();
-  // const { activeChannel, setActiveChannel } = active;
   const [modalInfo, setModalInfo] = useState({ type: null, item: null });
   const activeChannelId = useSelector(selectActiveChannelId);
   const dispatch = useDispatch();
@@ -49,13 +43,6 @@ const Channels = ({ data, refetch }) => {
     });
   };
 
-  // useEffect(() => {
-  //   if (activeChannel === null) {
-  //     const defChannel = data.find((channel) => parseInt(channel.id, 10) === defaultChannelId);
-  //     dispatch(setActiveChannel({ activeChannel: defChannel }));
-  //   }
-  // });
-
   const buildChannel = (c) => {
     const { name, id, removable } = c;
 
@@ -65,14 +52,16 @@ const Channels = ({ data, refetch }) => {
 
     const isActive = activeChannelId === id;
 
-    const btnClasses = classNames({
-      'btn-primary': isActive,
-      'btn-light': !isActive,
-    });
+    // const btnClasses = classNames({
+    //   'btn-secondary': isActive,
+    //   // 'text-truncate': removable,
+    //   // changed for test: 'btn-primary': isActive,
+    //   // 'btn-light': !isActive,
+    // });
 
     const builder = () => {
       const channel = (
-        <Button onClick={handleClick} className={['w-100', 'text-start', 'text-truncate', btnClasses]}>
+        <Button variant={isActive ? 'secondary' : null} onClick={handleClick} className={['w-100', 'rounded-0', 'text-start', 'text-truncate']}>
           <span className="me-1"># </span>
           {name}
         </Button>
@@ -84,7 +73,11 @@ const Channels = ({ data, refetch }) => {
       return (
         <Dropdown className="d-flex" as={ButtonGroup}>
           {channel}
-          <Dropdown.Toggle className={btnClasses} id={`channel-control-${id}`} />
+          <Dropdown.Toggle variant={isActive ? 'secondary' : null} id={`channel-control-${id}`}>
+            <span className="visually-hidden">
+              Управление каналом
+            </span>
+          </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => showModal('removing', { id })}
@@ -134,16 +127,8 @@ const Channels = ({ data, refetch }) => {
 };
 
 const ChannelBox = () => {
-  // const activeChannel = useSelector(selectActiveChannel);
-  // const defaultChannelId = useSelector(selectDefaultChannel);
-  // const dispatch = useDispatch();
   const { data, isLoading, refetch } = getChannels();
 
-  // eslint-disable-next-line consistent-return
-  // if (activeChannel === null) {
-  //   const defChannel = data?.find((channel) => parseInt(channel.id, 10) === defaultChannelId);
-  //   dispatch(setActiveChannel({ activeChannel: defChannel }));
-  // }
   return (
     <Col className="px-0 border-end d-flex flex-column border-primary h-100 col-4" md="2">
       {isLoading

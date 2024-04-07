@@ -102,6 +102,7 @@ const Messages = () => {
           <Form onSubmit={formikObj.handleSubmit}>
             <Form.Group className="d-flex">
               <Form.Control
+                aria-label="Новое сообщение"
                 onChange={formikObj.handleChange}
                 value={formikObj.values.message}
                 type="text"
