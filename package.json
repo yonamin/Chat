@@ -6,7 +6,6 @@
   "scripts": {
     "build": "npm run build --prefix frontend",
     "start": "npx start-server -s ./frontend/build",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd frontend && npm ci"
   },
   "repository": {
@@ -21,5 +20,9 @@
   "homepage": "https://github.com/yonamin/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.43.0",
+    "@types/node": "^20.12.5"
   }
 }

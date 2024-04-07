@@ -1,2 +1,7 @@
 node_modules
 /.vscode
+test.js
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
