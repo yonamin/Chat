@@ -10,6 +10,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, { payload: { username, token } }) => {
+      /* eslint-disable no-param-reassign */
       state.username = username;
       state.token = token;
     },

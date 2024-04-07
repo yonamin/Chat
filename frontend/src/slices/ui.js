@@ -13,6 +13,7 @@ const uiSlice = createSlice({
     //   state.activeModal = modal;
     // },
     setActiveChannelId: (state, { payload: { id } }) => {
+      /* eslint-disable no-param-reassign */
       state.activeChannelId = id;
     },
     // setDefaultChannelId: (state, { payload: { defaultChannelId } }) => {

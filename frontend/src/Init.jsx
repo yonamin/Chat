@@ -47,6 +47,7 @@ const Init = async () => {
     dispatch(
       channelsApi.util.updateQueryData('getChannels', undefined, (draft) => {
         const idx = draft.findIndex((c) => c.id === chn.id);
+        /* eslint-disable no-param-reassign */
         draft[idx] = chn;
       }),
     );
