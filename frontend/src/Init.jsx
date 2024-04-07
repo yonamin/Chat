@@ -17,7 +17,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/App.scss';
 
-export default async () => {
+const Init = async () => {
   const i18n = i18next.createInstance();
   await i18n
     .use(initReactI18next)
@@ -83,3 +83,5 @@ export default async () => {
     </React.StrictMode>
   );
 };
+
+export default Init;
