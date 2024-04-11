@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/yonamin/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/yonamin/frontend-project-12/actions)
 
 # Chat
-=
+
 #### _The app is helpful for organizing working communication, chatting with colleagues and friends._
 
 ### Channels
