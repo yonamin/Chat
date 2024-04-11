@@ -21,6 +21,7 @@ export default {
         input: 'Введите сообщение...',
       },
       channels: 'Каналы',
+      channelControl: 'Управление каналом',
       modals: {
         channelName: 'Имя канала',
         addChannel: 'Добавить канал',
@@ -55,5 +56,10 @@ export default {
       connectionError: 'Ошибка соединения',
     },
     unknownError: 'Что-то пошло не так...',
+    errorPage: {
+      failure: 'Неудача...',
+      pageNotFound: 'Страница не найдена:(',
+      toTheMainPage: 'Перейти на главную',
+    },
   },
 };

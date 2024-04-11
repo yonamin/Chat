@@ -3,29 +3,36 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import * as censor from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectActiveModal, setActiveModal } from '../../slices/ui';
 import { editChannel } from '../../services/channelsApi';
 
-const EditingChannelModal = ({
-  modalInfo,
-  refetch,
-  hideModal,
-}) => {
+const EditingChannelModal = () => {
   const { t } = useTranslation();
   const inputRef = useRef(null);
-  const [errMessage, setErrMessage] = useState(null);
-  const [isLoading, setLoading] = useState(false);
-  // const channels = useSelector((state) => state.channels);
-  const [editChannelFn] = editChannel();
-  const channelNameSchema = Yup.string()
-    .required(t('validationFeedback.required'))
-    .min(3, t('validationFeedback.invalidLength'))
-    .max(20, t('validationFeedback.invalidLength'))
-    .notOneOf(modalInfo.item.channelNames, t('mainPage.modals.notUnique'));
-  const { id, name } = modalInfo.item;
+  const dispatch = useDispatch();
+  const activeModal = useSelector(selectActiveModal);
+  const [editChannelFn, { isLoading }] = editChannel();
+  const channelNameSchema = Yup.object().shape({
+    newChannelName: Yup.string()
+      .required(t('validationFeedback.required'))
+      .min(3, t('validationFeedback.invalidLength'))
+      .max(20, t('validationFeedback.invalidLength'))
+      .notOneOf(activeModal.item.channelNames, t('mainPage.modals.notUnique')),
+  });
+
+  const { id, name } = activeModal.item;
+
+  const hideModal = () => {
+    dispatch(setActiveModal({
+      type: null,
+      item: null,
+    }));
+  };
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -33,28 +40,25 @@ const EditingChannelModal = ({
       newChannelName: name,
     },
     onSubmit: ({ newChannelName }) => {
-      setErrMessage(null);
-      try {
-        channelNameSchema.validateSync(newChannelName);
-        setLoading(true);
-        const channelObj = {
-          newName: { name: censor.clean(newChannelName) },
-          channelId: id,
-        };
-        editChannelFn(channelObj)
-          .then(() => {
-            setLoading(false);
-            hideModal();
-            formik.resetForm();
-            refetch();
-            toast.success(t('toast.channelRenamed'));
-          });
-      } catch (err) {
-        setErrMessage(err.message);
-      }
+      const channelObj = {
+        newName: { name: censor.clean(newChannelName) },
+        channelId: id,
+      };
+      editChannelFn(channelObj)
+        .then(() => {
+          hideModal();
+          formik.resetForm();
+          toast.success(t('toast.channelRenamed'));
+        })
+        .catch(() => {
+          formik.setFieldError('newChannel', t('unknownError'));
+        });
     },
+    validationSchema: channelNameSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
   });
-
+  const { errors } = formik;
   useEffect(() => {
     inputRef.current?.focus();
     inputRef.current?.select();
@@ -63,7 +67,6 @@ const EditingChannelModal = ({
   const handleClose = () => {
     hideModal();
     formik.resetForm();
-    setErrMessage(null);
   };
 
   return (
@@ -82,10 +85,10 @@ const EditingChannelModal = ({
               type="text"
               id="newChannelName"
               name="newChannelName"
-              isInvalid={errMessage}
+              isInvalid={errors.newChannelName}
               ref={inputRef}
             />
-            <Form.Control.Feedback type="invalid">{errMessage}</Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">{errors.newChannelName}</Form.Control.Feedback>
             <div className="d-flex justify-content-end">
               <Button className="me-2" variant="outline-dark" onClick={handleClose}>{t('mainPage.modals.cancel')}</Button>
               <Button disabled={isLoading} type="submit">{t('mainPage.modals.send')}</Button>

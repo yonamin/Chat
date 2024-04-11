@@ -20,6 +20,7 @@ export default {
         input: 'Write a message...',
       },
       channels: 'Channels',
+      channelControl: 'Channel control',
       modals: {
         channelName: 'Channel name',
         addChannel: 'Add channel',
@@ -30,8 +31,6 @@ export default {
         ensuring: 'Are you sure?',
         remove: 'Remove',
         edit: 'Edit',
-        // invalidLength: 'From 3 to 20 symbols',
-        // required: 'Required field',
         notUnique: 'Must be unique',
       },
     },
@@ -56,5 +55,10 @@ export default {
       connectionError: 'Connection error',
     },
     unknownError: 'Something went wrong...',
+    errorPage: {
+      failure: 'Failure',
+      pageNotFound: 'Page not found',
+      toTheMainPage: 'To the main page',
+    },
   },
 };

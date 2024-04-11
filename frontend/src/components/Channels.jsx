@@ -4,101 +4,96 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Col from 'react-bootstrap/Col';
-//
 // import classNames from 'classnames';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getChannels } from '../services/channelsApi';
+import useAuth from '../hooks/useAuth';
 import {
   setActiveChannelId,
+  setActiveModal,
   selectActiveChannelId,
+  selectActiveModal,
 } from '../slices/ui';
 import MainSpinner from './Spinner';
 import getModal from './modals/index';
 
-const renderModal = ({ modalInfo, hideModal, refetch }) => {
-  if (!modalInfo.type) {
-    return null;
-  }
+const SingleChannel = ({ channel, showModal, channelNames }) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const activeChannelId = useSelector(selectActiveChannelId);
+  const { name, id, removable } = channel;
 
-  const Modal = getModal(modalInfo.type);
-  return <Modal modalInfo={modalInfo} hideModal={hideModal} refetch={refetch} />;
+  const handleClick = () => {
+    dispatch(setActiveChannelId({ id }));
+  };
+
+  const isActive = activeChannelId === id;
+
+  const builder = () => {
+    const chnl = (
+      <Button variant={isActive ? 'secondary' : null} onClick={handleClick} className={['w-100', 'rounded-0', 'text-start', 'text-truncate']}>
+        <span className="me-1"># </span>
+        {name}
+      </Button>
+    );
+    if (!removable) {
+      return chnl;
+    }
+
+    return (
+      <Dropdown className="d-flex" as={ButtonGroup}>
+        {chnl}
+        <Dropdown.Toggle variant={isActive ? 'secondary' : null} id={`channel-control-${id}`}>
+          <span className="visually-hidden">
+            {t('mainPage.channelControl')}
+          </span>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={() => showModal('removing', { id })}
+          >
+            {t('mainPage.modals.remove')}
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => showModal('editing', { id, name, channelNames })}
+          >
+            {t('mainPage.modals.edit')}
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    );
+  };
+
+  return (
+    <Nav.Item key={id} as="li" className="w-100">
+      {builder()}
+    </Nav.Item>
+  );
 };
 
-const Channels = ({ data, refetch }) => {
+const Channels = ({ data, error }) => {
   const { t } = useTranslation();
-  const [modalInfo, setModalInfo] = useState({ type: null, item: null });
-  const activeChannelId = useSelector(selectActiveChannelId);
+  const activeModal = useSelector(selectActiveModal);
   const dispatch = useDispatch();
+  const { logOut } = useAuth();
+
+  if (error?.status === 401) {
+    logOut();
+  }
 
   const channelNames = data.map((c) => c.name);
   const showModal = (type, item = null) => {
-    setModalInfo({ type, item });
-  };
-  const hideModal = () => {
-    setModalInfo({
-      type: null,
-      item: null,
-    });
+    dispatch(setActiveModal({ type, item }));
   };
 
-  const buildChannel = (c) => {
-    const { name, id, removable } = c;
-
-    const handleClick = () => {
-      dispatch(setActiveChannelId({ id }));
-    };
-
-    const isActive = activeChannelId === id;
-
-    // const btnClasses = classNames({
-    //   'btn-secondary': isActive,
-    //   // 'text-truncate': removable,
-    //   // changed for test: 'btn-primary': isActive,
-    //   // 'btn-light': !isActive,
-    // });
-
-    const builder = () => {
-      const channel = (
-        <Button variant={isActive ? 'secondary' : null} onClick={handleClick} className={['w-100', 'rounded-0', 'text-start', 'text-truncate']}>
-          <span className="me-1"># </span>
-          {name}
-        </Button>
-      );
-      if (!removable) {
-        return channel;
-      }
-
-      return (
-        <Dropdown className="d-flex" as={ButtonGroup}>
-          {channel}
-          <Dropdown.Toggle variant={isActive ? 'secondary' : null} id={`channel-control-${id}`}>
-            <span className="visually-hidden">
-              Управление каналом
-            </span>
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item
-              onClick={() => showModal('removing', { id })}
-            >
-              {t('mainPage.modals.remove')}
-            </Dropdown.Item>
-            <Dropdown.Item
-              onClick={() => showModal('editing', { id, name, channelNames })}
-            >
-              {t('mainPage.modals.edit')}
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      );
-    };
-
-    return (
-      <Nav.Item key={id} as="li" className="w-100">
-        {builder()}
-      </Nav.Item>
-    );
+  const renderModal = () => {
+    if (!activeModal.type) {
+      return null;
+    }
+    const Modal = getModal(activeModal.type);
+    return <Modal />;
   };
 
   return (
@@ -119,21 +114,28 @@ const Channels = ({ data, refetch }) => {
         </Button>
       </div>
       <Nav as="ul" className="overflow-auto h-100 nav-fill nav-pills d-block mb-3 px-2">
-        {data.map((channel) => buildChannel(channel))}
+        {data.map((channel) => (
+          <SingleChannel
+            key={channel.id}
+            channel={channel}
+            showModal={showModal}
+            channelNames={channelNames}
+          />
+        ))}
       </Nav>
-      {renderModal({ modalInfo, hideModal, refetch })}
+      {renderModal()}
     </>
   );
 };
 
 const ChannelBox = () => {
-  const { data, isLoading, refetch } = getChannels();
+  const { data, isLoading, error } = getChannels();
 
   return (
     <Col className="px-0 border-end d-flex flex-column border-primary h-100 col-4" md="2">
       {isLoading
         ? <MainSpinner />
-        : <Channels data={data} refetch={refetch} />}
+        : <Channels data={data} error={error} />}
     </Col>
   );
 };

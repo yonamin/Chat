@@ -3,15 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
-    // activeModal: null,
+    activeModal: { type: null, item: null },
     // defaultChannelId: 1,
     activeChannelId: '1',
     // channelNames: [],
   },
   reducers: {
-    // setActiveModal: (state, { payload: { modal } }) => {
-    //   state.activeModal = modal;
-    // },
+    setActiveModal: (state, { payload: modal }) => {
+      state.activeModal = modal;
+    },
     setActiveChannelId: (state, { payload: { id } }) => {
       /* eslint-disable no-param-reassign */
       state.activeChannelId = id;
@@ -27,7 +27,7 @@ const uiSlice = createSlice({
 
 export const {
   setActiveChannelId,
-  // setActiveModal,
+  setActiveModal,
   // setDefaultChannel,
   // addChannelName,
 } = uiSlice.actions;
@@ -35,6 +35,6 @@ export const {
 export default uiSlice.reducer;
 
 export const selectActiveChannelId = (state) => state.ui.activeChannelId;
-// export const selectActiveModal = (state) => state.ui.activeModal;
+export const selectActiveModal = (state) => state.ui.activeModal;
 // export const selectDefaultChannel = (state) => state.ui.defaultChannelId;
 // export const selectChannelNames = (state) => state.ui.channelNames;

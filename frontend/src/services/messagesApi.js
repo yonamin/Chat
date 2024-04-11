@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import routes from '../routes';
 
+const { apiPaths } = routes;
+
 const baseQuery = fetchBaseQuery({
   baseUrl: '',
   prepareHeaders: (headers, { getState }) => {
@@ -19,11 +21,11 @@ export const messagesApi = createApi({
   baseQuery,
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: () => routes.messagesPath(),
+      query: () => apiPaths.messagesPath(),
     }),
     addMessage: builder.mutation({
       query: (message) => ({
-        url: routes.messagesPath(),
+        url: apiPaths.messagesPath(),
         method: 'POST',
         body: message,
       }),

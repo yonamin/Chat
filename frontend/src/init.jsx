@@ -17,7 +17,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/App.scss';
 
-const Init = async () => {
+const init = async () => {
   const i18n = i18next.createInstance();
   await i18n
     .use(initReactI18next)
@@ -59,11 +59,12 @@ const Init = async () => {
         draft.splice(idx, 1);
       }),
     );
-    dispatch(setActiveChannelId({ id: String(defaultChannelId) }));
+    if (store.getState().ui.activeChannelId === chn.id) {
+      dispatch(setActiveChannelId({ id: String(defaultChannelId) }));
+    }
   });
 
   filter.add(filter.getDictionary('ru'));
-  filter.add(filter.getDictionary('fr'));
 
   const rollbarConfig = {
     accessToken: process.env.REACT_APP_ROLLBAR_TOKEN,
@@ -85,4 +86,4 @@ const Init = async () => {
   );
 };
 
-export default Init;
+export default init;

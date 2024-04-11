@@ -6,7 +6,6 @@ import { useFormik } from 'formik';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { uniqueId } from 'lodash';
 import * as censor from 'leo-profanity';
 
 import MainSpinner from './Spinner';
@@ -24,10 +23,10 @@ const MessageBox = ({ activeChannelId, messages, setCount }) => {
   useEffect(() => {
     setCount(currentMessages.length);
     messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  });
+  }, [currentMessages.length, setCount]);
 
   const buildMessage = (m) => (
-    <div key={uniqueId()} className="text-break mb-2">
+    <div key={m.id} className="text-break mb-2">
       <b>{m.username}</b>
       {`: ${m.body}`}
     </div>
@@ -43,7 +42,7 @@ const MessageBox = ({ activeChannelId, messages, setCount }) => {
 const Messages = () => {
   const { t } = useTranslation();
   const { user: { username } } = useAuth();
-  const { data, isLoading, refetch } = getMessages();
+  const { data, isLoading } = getMessages();
   const { data: channels } = getChannels();
   const [addMessageFunc] = addMessage();
   const [messagesCount, setMessagesCount] = useState(0);
@@ -59,14 +58,13 @@ const Messages = () => {
         username,
       };
       addMessageFunc(msgObj);
-      refetch();
       formikObj.values.message = '';
     },
   });
 
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, [activeChannelId]);
 
   const messageBoxRender = () => {
     if (isLoading) {
@@ -109,6 +107,7 @@ const Messages = () => {
                 placeholder={t('mainPage.messages.input')}
                 id="message"
                 ref={inputRef}
+                required
               />
               <Button type="submit" variant="outline-dark" size="sm" className="border-dark rounded-end border-2 ms-2 pb-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-heart-arrow" viewBox="0 0 16 16">

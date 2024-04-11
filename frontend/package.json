@@ -6,9 +6,6 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "@rollbar/react": "^0.12.0-beta",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.3",
     "classnames": "^2.5.1",
@@ -48,6 +45,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.3.0",
+    "@testing-library/user-event": "^14.5.2",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-functional": "^6.4.0",

@@ -1,24 +1,30 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux';
 import { removeChannel } from '../../services/channelsApi';
+import { selectActiveModal, setActiveModal } from '../../slices/ui';
 
-const RemovingChannelModal = ({ hideModal, refetch, modalInfo }) => {
+const RemovingChannelModal = () => {
   const { t } = useTranslation();
-  const [removeChannelFn] = removeChannel();
-  const [isLoading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const activeModal = useSelector(selectActiveModal);
+  const [removeChannelFn, { isLoading }] = removeChannel();
+
+  const hideModal = () => {
+    dispatch(setActiveModal({
+      type: null,
+      item: null,
+    }));
+  };
 
   const handleRemove = () => {
-    setLoading(true);
-    removeChannelFn(modalInfo.item.id)
+    removeChannelFn(activeModal.item.id)
       .then(() => {
-        setLoading(false);
         hideModal();
         toast.success(t('toast.channelRemoved'));
       });
-    refetch();
   };
 
   return (

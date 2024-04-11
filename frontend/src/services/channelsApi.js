@@ -2,6 +2,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import routes from '../routes';
 
+const { apiPaths } = routes;
+
 const baseQuery = fetchBaseQuery({
   baseUrl: '',
   prepareHeaders: (headers, { getState }) => {
@@ -18,32 +20,37 @@ const baseQuery = fetchBaseQuery({
 export const channelsApi = createApi({
   reducerPath: 'channels',
   baseQuery,
+  tagTypes: ['Channels'],
   endpoints: (builder) => ({
     getChannels: builder.query({
-      query: () => routes.channelsPath(),
+      query: () => apiPaths.channelsPath(),
+      providesTags: ['Channels'],
     }),
     addChannel: builder.mutation({
       query: (channel) => ({
-        url: routes.channelsPath(),
+        url: apiPaths.channelsPath(),
         body: channel,
         method: 'POST',
       }),
+      invalidatesTags: ['Channels'],
     }),
     editChannel: builder.mutation({
       query: (channel) => {
         const { newName, channelId } = channel;
         return {
-          url: routes.channelPath(channelId),
+          url: apiPaths.channelPath(channelId),
           body: newName,
           method: 'PATCH',
         };
       },
+      invalidatesTags: ['Channels'],
     }),
     removeChannel: builder.mutation({
       query: (channelId) => ({
-        url: routes.channelPath(channelId),
+        url: apiPaths.channelPath(channelId),
         method: 'DELETE',
       }),
+      invalidatesTags: ['Channels'],
     }),
   }),
 });

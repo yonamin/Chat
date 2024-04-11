@@ -6,14 +6,13 @@ import Card from 'react-bootstrap/Card';
 import { useFormik } from 'formik';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
 import { login } from '../services/usersApi';
-// import routes from '../routes';
 import MainNavbar from './MainNavbar';
+import routes from '../routes';
 
 const Login = () => {
   const inputRef = useRef();
@@ -22,6 +21,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { logIn } = useAuth();
   const [loginToServer] = login();
+  const { pagesPaths } = routes;
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -76,7 +76,6 @@ const Login = () => {
                 >
                   <Form.Control
                     name="username"
-                    // id="username"
                     placeholder={t('loginPage.username')}
                     onChange={formikObj.handleChange}
                     value={formikObj.values.username}
@@ -93,7 +92,6 @@ const Login = () => {
                 >
                   <Form.Control
                     name="password"
-                    // id="password"
                     type="password"
                     placeholder={t('loginPage.password')}
                     onChange={formikObj.handleChange}
@@ -110,9 +108,9 @@ const Login = () => {
             </Form>
           </Card.Body>
           <Card.Footer className="text-center p-3">
-            <Button variant="link" onClick={() => navigate('/signup')}>
+            <Link to={pagesPaths.signupPage()}>
               {t('signUpPage.signingUp')}
-            </Button>
+            </Link>
           </Card.Footer>
         </Card>
       </Container>
