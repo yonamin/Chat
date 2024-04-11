@@ -1,10 +1,11 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/yonamin/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/yonamin/frontend-project-12/actions)
 
-#Chat
-####The app is helpful for organizing working communication, chatting with colleagues and friends.
+# Chat
+=
+#### _The app is helpful for organizing working communication, chatting with colleagues and friends._
 
-###Channels
+### Channels
 Managing new channels:
 - create
 - rename
@@ -13,7 +14,17 @@ Managing new channels:
 
 The app has two languages: english and russian.
 
-##Stack
+## Installation
+-----
+To run project locally use these commands.
+```
+make install
+make build
+make start
+```
+
+## Stack
+------
 - React / React Hooks - user interfaces
 - Redux / Redux Toolkit - state container
 - Bootstrap - CSS Framework
