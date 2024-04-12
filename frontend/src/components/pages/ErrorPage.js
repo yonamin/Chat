@@ -1,17 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import MainNavbar from './MainNavbar';
+import routes from '../../routes';
 
 const ErrorPage = () => {
-  const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const handleClick = () => {
-    navigate('/');
-  };
+  const { pagesPaths } = routes;
 
   return (
     <div>
@@ -25,7 +21,9 @@ const ErrorPage = () => {
             <h2>{t('errorPage.pageNotFound')}</h2>
           </Card.Body>
           <Card.Footer className="p-3">
-            <Button onClick={handleClick} variant="link">{t('errorPage.toTheMainPage')}</Button>
+            <Link to={pagesPaths.mainPage()}>
+              {t('errorPage.toTheMainPage')}
+            </Link>
           </Card.Footer>
         </Card>
       </Container>

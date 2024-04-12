@@ -9,10 +9,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import useAuth from '../hooks/useAuth';
-import { login } from '../services/usersApi';
+import useAuth from '../../hooks/useAuth';
+import { login } from '../../services/usersApi';
 import MainNavbar from './MainNavbar';
-import routes from '../routes';
+import routes from '../../routes';
 
 const Login = () => {
   const inputRef = useRef();

@@ -8,9 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-// import { isEmpty } from 'lodash';
-import { signup } from '../services/usersApi';
-import useAuth from '../hooks/useAuth';
+import { signup } from '../../services/usersApi';
+import useAuth from '../../hooks/useAuth';
 import MainNavbar from './MainNavbar';
 
 const SignUp = () => {
@@ -124,7 +123,6 @@ const SignUp = () => {
                 </FloatingLabel>
               </Form.Group>
               <Button variant="outline-dark" type="submit">
-                {/*  disabled={!isEmpty(errors)} */}
                 {t('signUpPage.toSignUp')}
               </Button>
             </Form>

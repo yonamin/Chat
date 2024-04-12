@@ -7,39 +7,16 @@ import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as censor from 'leo-profanity';
+import { toast } from 'react-toastify';
 
-import MainSpinner from './Spinner';
-import { getMessages, addMessage } from '../services/messagesApi';
-import useAuth from '../hooks/useAuth';
-import { selectActiveChannelId } from '../slices/ui';
-import { getChannels } from '../services/channelsApi';
-// make correct overflow in messageBox
+import MainSpinner from '../Spinner';
+import { getMessages, addMessage } from '../../services/messagesApi';
+import useAuth from '../../hooks/useAuth';
+import { selectActiveChannelId } from '../../slices/ui';
+import { getChannels } from '../../services/channelsApi';
+import Messages from './Messages';
 
-const MessageBox = ({ activeChannelId, messages, setCount }) => {
-  const { data } = messages;
-  const currentMessages = data.filter((m) => m.channelId === activeChannelId);
-  const messageBoxRef = useRef(null);
-
-  useEffect(() => {
-    setCount(currentMessages.length);
-    messageBoxRef.current.scrollTop = messageBoxRef.current.scrollHeight;
-  }, [currentMessages.length, setCount]);
-
-  const buildMessage = (m) => (
-    <div key={m.id} className="text-break mb-2">
-      <b>{m.username}</b>
-      {`: ${m.body}`}
-    </div>
-  );
-
-  return (
-    <div ref={messageBoxRef} id="messages-box" className="px-5 overflow-auto">
-      {currentMessages.map((msg) => buildMessage(msg))}
-    </div>
-  );
-};
-
-const Messages = () => {
+const MessageBox = () => {
   const { t } = useTranslation();
   const { user: { username } } = useAuth();
   const { data, isLoading } = getMessages();
@@ -57,16 +34,24 @@ const Messages = () => {
         channelId: activeChannelId,
         username,
       };
-      addMessageFunc(msgObj);
-      formikObj.values.message = '';
+      addMessageFunc(msgObj)
+        .unwrap()
+        .then(() => {
+          formikObj.resetForm();
+        })
+        .catch(() => {
+          toast.error(t('unknownError'));
+        });
     },
   });
+  const currentMessages = data?.filter((m) => m.channelId === activeChannelId) ?? [];
 
   useEffect(() => {
     inputRef.current.focus();
-  }, [activeChannelId]);
+    setMessagesCount(currentMessages.length);
+  }, [activeChannelId, currentMessages.length]);
 
-  const messageBoxRender = () => {
+  const messagesRender = () => {
     if (isLoading) {
       return <MainSpinner />;
     }
@@ -75,10 +60,8 @@ const Messages = () => {
     }
 
     return (
-      <MessageBox
-        activeChannelId={activeChannelId}
-        messages={{ data, isLoading }}
-        setCount={setMessagesCount}
+      <Messages
+        messages={currentMessages}
       />
     );
   };
@@ -95,7 +78,7 @@ const Messages = () => {
           </p>
           <span className="text-muted">{t('mainPage.messages.counter.count', { count: messagesCount })}</span>
         </div>
-        {messageBoxRender()}
+        {messagesRender()}
         <div className="py-3 px-5 mt-auto">
           <Form onSubmit={formikObj.handleSubmit}>
             <Form.Group className="d-flex">
@@ -122,4 +105,4 @@ const Messages = () => {
   );
 };
 
-export default Messages;
+export default MessageBox;

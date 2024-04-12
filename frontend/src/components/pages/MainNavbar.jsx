@@ -1,24 +1,33 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-// import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { uniqueId } from 'lodash';
-// import useAuth from '../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
-const MainNavbar = ({ logOutBtn }) => {
+const MainNavbar = ({ hasLogout }) => {
   const { t, i18n } = useTranslation();
-  // const { logOut } = useAuth();
+  const { logOut } = useAuth();
   const { resolvedLanguage } = i18n;
+
+  const handleLogOut = () => logOut();
+  const logOutBtn = (
+    <Button
+      onClick={handleLogOut}
+      className="border-dark border-start-0
+        border-top-0 border-3"
+    >
+      {t('mainPage.logOut')}
+    </Button>
+  );
 
   const handleSwitchLng = (lng) => async () => {
     await i18n.changeLanguage(lng);
   };
-
-  // const handleLogOut = () => logOut();
 
   const buildLanguageList = () => {
     const lngs = i18n.languages;
@@ -57,9 +66,7 @@ const MainNavbar = ({ logOutBtn }) => {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        {logOutBtn ?? null}
-        {/* <Button onClick={handleLogOut} className="border-dark border-start-0
-        border-top-0 border-3">{t('mainPage.logOut')}</Button> */}
+        {hasLogout ? logOutBtn : null}
       </Container>
     </Navbar>
   );
