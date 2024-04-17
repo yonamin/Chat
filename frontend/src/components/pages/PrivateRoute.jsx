@@ -5,7 +5,6 @@ import routes from '../../routes';
 const PrivateRoute = ({ children }) => {
   const { pagesPaths } = routes;
   const { loggedIn } = useAuth();
-  console.log('test', loggedIn);
   return loggedIn ? children : <Navigate to={pagesPaths.loginPage()} />;
 };
 
