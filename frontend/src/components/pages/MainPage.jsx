@@ -7,7 +7,7 @@ import MainNavbar from './MainNavbar';
 const MainPage = () => (
   <div className="h-100">
     <div className="d-flex flex-column h-100">
-      <MainNavbar hasLogout />
+      <MainNavbar hasLogoutBtn />
       <Container className="h-100 rounded overflow-hidden bg-light my-4">
         <Row className="h-100">
           <ChannelBox />

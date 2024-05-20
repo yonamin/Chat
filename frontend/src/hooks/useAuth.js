@@ -1,17 +1,36 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import axios from 'axios';
 import { selectCurrentUser, setCredentials } from '../slices/authSlice';
 
 export default () => {
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
-
-  const loggedIn = user.token;
+  const [isLogged, setIsLogged] = useState();
+  const checkLogin = () => {
+    const checkToken = () => {
+      axios.get('/api/v1/channels', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }).then(() => {
+        console.log('axios, true');
+        setIsLogged(true);
+      }).catch(() => {
+        setIsLogged(false);
+      });
+    };
+    if (!user.token) {
+      setIsLogged(false);
+    } else {
+      checkToken();
+    }
+    return isLogged;
+  };
 
   const logIn = (username, token) => {
-    if (!localStorage.getItem('token')) {
-      localStorage.setItem('username', username);
-      localStorage.setItem('token', token);
-    }
+    localStorage.setItem('username', username);
+    localStorage.setItem('token', token);
     dispatch(setCredentials({ username, token }));
   };
 
@@ -23,7 +42,7 @@ export default () => {
 
   return {
     user,
-    loggedIn,
+    checkLogin,
     logIn,
     logOut,
   };

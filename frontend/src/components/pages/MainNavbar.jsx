@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { uniqueId } from 'lodash';
 import useAuth from '../../hooks/useAuth';
 
-const MainNavbar = ({ hasLogout }) => {
+const MainNavbar = ({ hasLogoutBtn }) => {
   const { t, i18n } = useTranslation();
   const { logOut } = useAuth();
   const { resolvedLanguage } = i18n;
@@ -66,7 +66,7 @@ const MainNavbar = ({ hasLogout }) => {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-        {hasLogout ? logOutBtn : null}
+        {hasLogoutBtn ? logOutBtn : null}
       </Container>
     </Navbar>
   );
