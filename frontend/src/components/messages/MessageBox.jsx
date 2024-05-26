@@ -70,7 +70,7 @@ const MessageBox = () => {
   return (
     <Col className="p-0 h-100">
       <div className="d-flex h-100 flex-column">
-        <div className="chat bg-secondary rounded p-3 pe-2 ">
+        <div className="chat bg-primary p-3 pe-2 ">
           <p className="m-0">
             <b>
               {`# ${channelName}`}
@@ -83,6 +83,7 @@ const MessageBox = () => {
           <Form onSubmit={formikObj.handleSubmit}>
             <Form.Group className="d-flex">
               <Form.Control
+                className="border-dark bg-light"
                 aria-label="Новое сообщение"
                 onChange={formikObj.handleChange}
                 value={formikObj.values.message}

@@ -1,7 +1,15 @@
 html, body{
   height:100%;
-}
-
-#messages-box{
-  scrollbar-width: thin;
+  ::-webkit-scrollbar {
+    width: 8px;
+    opacity: 0;
+    padding: 2px;
+  /* background: #e4e0d5; */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #6C584C;
+    border-radius: 10px;
+    margin: 2px 2px;
+    padding: 2px;
+  }
 }

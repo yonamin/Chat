@@ -29,16 +29,18 @@ const RemovingChannelModal = () => {
 
   return (
     <Modal show onHide={hideModal}>
-      <Modal.Header closeButton>
-        <Modal.Title>{t('mainPage.modals.removeChannel')}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p className="lead">{t('mainPage.modals.ensuring')}</p>
-        <div className="d-flex justify-content-end">
-          <Button className="me-2" variant="outline-dark" onClick={hideModal}>{t('mainPage.modals.cancel')}</Button>
-          <Button onClick={handleRemove} disabled={isLoading} variant="danger">{t('mainPage.modals.remove')}</Button>
-        </div>
-      </Modal.Body>
+      <div className="bg-light">
+        <Modal.Header closeButton>
+          <Modal.Title>{t('mainPage.modals.removeChannel')}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="lead">{t('mainPage.modals.ensuring')}</p>
+          <div className="d-flex justify-content-end">
+            <Button className="me-2" variant="outline-dark" onClick={hideModal}>{t('mainPage.modals.cancel')}</Button>
+            <Button onClick={handleRemove} disabled={isLoading} variant="danger">{t('mainPage.modals.remove')}</Button>
+          </div>
+        </Modal.Body>
+      </div>
     </Modal>
   );
 };

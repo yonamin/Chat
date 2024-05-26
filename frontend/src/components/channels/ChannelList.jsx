@@ -29,7 +29,7 @@ const ChannelList = ({ data }) => {
 
   return (
     <>
-      <div className="d-flex bg-secondary rounded border-3 border-bottom border-end border-primary justify-content-between mb-2 ps-3 pe-2 p-4">
+      <div className="d-flex bg-primary justify-content-between ps-3 pe-2 p-4">
         <b className="mt-2">{t('mainPage.channels')}</b>
         <Button
           name="addChannel"
@@ -58,7 +58,7 @@ const ChannelList = ({ data }) => {
           <span className="visually-hidden">+</span>
         </Button>
       </div>
-      <Nav as="ul" className="overflow-auto h-100 nav-fill nav-pills d-block mb-3 px-2">
+      <Nav as="ul" className="overflow-auto h-100 bg-secondary nav-fill nav-pills d-block pt-1">
         {data.map((channel) => (
           <SingleChannel
             key={channel.id}

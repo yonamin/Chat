@@ -14,7 +14,6 @@ export default () => {
           Authorization: `Bearer ${user.token}`,
         },
       }).then(() => {
-        console.log('axios, true');
         setIsLogged(true);
       }).catch(() => {
         setIsLogged(false);

@@ -24,7 +24,7 @@ const SingleChannel = ({ channel, showModal, channelNames }) => {
 
   const builder = () => {
     const chnl = (
-      <Button variant={isActive ? 'secondary' : null} onClick={handleClick} className={['w-100', 'rounded-0', 'text-start', 'text-truncate']}>
+      <Button variant={isActive ? 'primary' : null} onClick={handleClick} className={['w-100', 'rounded-0', 'text-start', 'text-truncate']}>
         <span className="me-1"># </span>
         {name}
       </Button>
@@ -34,9 +34,9 @@ const SingleChannel = ({ channel, showModal, channelNames }) => {
     }
 
     return (
-      <Dropdown className="d-flex" as={ButtonGroup}>
+      <Dropdown className="d-flex bg-secondary rounded-0" as={ButtonGroup}>
         {chnl}
-        <Dropdown.Toggle variant={isActive ? 'secondary' : null} id={`channel-control-${id}`}>
+        <Dropdown.Toggle variant={isActive ? 'primary' : null} id={`channel-control-${id}`} className="rounded-0">
           <span className="visually-hidden">
             {t('mainPage.channelControl')}
           </span>
