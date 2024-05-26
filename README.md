@@ -6,20 +6,20 @@
 #### _The app is helpful for organizing working communication, chatting with colleagues and friends._
 
 ## Login page
-![login](https://github.com/yonamin/Chat/assets/92670071/b53e78fd-cb0c-4aef-96a4-cae09ca25c7f)
+![login](https://github.com/yonamin/Chat/assets/92670071/fa4c69a9-54fa-4b66-8de8-b5a06afceb06)
 
 ## Sign up page
-![signUp](https://github.com/yonamin/Chat/assets/92670071/5164d746-5779-49db-a28a-ea276650e13a)
+![signUp](https://github.com/yonamin/Chat/assets/92670071/6abaaf8c-7278-482b-84b8-c61630383967)
 
 ## Main page
-![mainPage](https://github.com/yonamin/Chat/assets/92670071/8c315595-3e6e-4840-b539-71fc48224cd0)
+![mainPage](https://github.com/yonamin/Chat/assets/92670071/d7b16716-b839-4e23-9dbe-6a72b5944f1c)
 ### Channels
 You can manage new channels:
 - create
 - rename
 - delete
-![creating](https://github.com/yonamin/Chat/assets/92670071/754ee699-5a80-44b3-873e-3995494869d6)
-![managing](https://github.com/yonamin/Chat/assets/92670071/3c64c6c0-c8ca-491a-b208-31cd01544146)
+![creating](https://github.com/yonamin/Chat/assets/92670071/6abb8d32-406c-45be-9110-154f08d0c596)
+![managing](https://github.com/yonamin/Chat/assets/92670071/0ac8e345-40de-482e-8340-5e0abaaa6ed2)
 
 
 The app has two languages: english and russian.
