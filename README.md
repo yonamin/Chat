@@ -3,7 +3,7 @@
 
 # Chat
 
-#### _The app is helpful for organizing working communication, chatting with colleagues and friends._
+#### _The app is helpful for organization working communication, chatting with colleagues and friends._
 
 ## Login page
 ![login](https://github.com/yonamin/Chat/assets/92670071/fa4c69a9-54fa-4b66-8de8-b5a06afceb06)
